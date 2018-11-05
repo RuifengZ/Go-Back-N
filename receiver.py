@@ -1,6 +1,5 @@
 import socket
 import sys
-import time
 from check import ip_checksum
 
 HOST = ''  # Symbolic name meaning all available interfaces
@@ -24,7 +23,6 @@ except socket.error as msg:
 print('Socket bind complete')
 
 expect_seq = 0
-N = input('Enter Window Size: ')
 
 # now keep talking with the client
 while 1:
@@ -42,13 +40,10 @@ while 1:
     if ip_checksum(pkt) == checksum and seq == str(expect_seq):
         print('recv: Good Data Sending ACK' + str(seq))
         print('recv pkt: ' + str(pkt))
-        s.sendto(str(seq), addr)
-        expect_seq = 1 - expect_seq
+        s.sendto(str(expect_seq).encode(), addr)
+        expect_seq += 1
     else:
         # Check seq and send according ACK
-        if seq == str(expect_seq):
-            print('recv: Bad Checksum Not Sending')
-        else:
-            print('recv: Bad Seq Sending ACK' + str(1 - expect_seq))
-            s.sendto(str(1 - expect_seq), addr)
+        print('recv: Sending ACK' + str(expect_seq))
+        s.sendto(str(expect_seq).encode(), addr)
 s.close()
