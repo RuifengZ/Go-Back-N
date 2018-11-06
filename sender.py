@@ -14,6 +14,7 @@ except socket.error:
 host = 'localhost'
 port = 2163
 
+s.setblocking(False)
 N = input('Enter Window Size: ')
 base = 0
 nextSeq = 0
@@ -23,7 +24,14 @@ testLoss = True
 
 # Continuously send packets
 while 1:
-    print('base: ' + str(base) + ' nextSeq: ' + str(nextSeq))
+    # print('base: ' + str(base) + ' nextSeq: ' + str(nextSeq))
+    # for j in range(base, N):
+    #     msg = 'Message ' + str(nextSeq)
+    #     print('send: SENDING PKT: ' + str(nextSeq))
+    #     s.sendto(ip_checksum(msg) + str(nextSeq) + msg, (host, port))
+    #     if base == nextSeq:
+    #         startTime = time.time()
+    #     nextSeq += 1
     if nextSeq < base + N:
         try:
             # Send good package
