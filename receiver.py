@@ -46,6 +46,10 @@ while 1:
         expect_seq += 1
     else:
         # Check seq and send according ACK
-        print('recv: Sending ACK' + str(expect_seq))
-        s.sendto(str(expect_seq).encode(), addr)
+        print('recv: Sending ACK' + str(expect_seq - 1))
+        s.sendto(str(expect_seq - 1).encode(), addr)
+   
+    if expect_seq == 10:
+        break
+
 s.close()

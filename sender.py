@@ -54,20 +54,20 @@ while 1:
         startTime = time.time()
         for j in range(base, nextSeq):
             prevMsg = 'Message ' + str(j)
+            print('send: SENDING PKT: ' + str(j))
             s.sendto(ip_checksum(prevMsg) + str(j) + prevMsg, (host, port))
 
     try:
-        # receive data from client (data, addr)
+    # receive data from client (data, addr)
         reply, addr = s.recvfrom(1024)
         ack = reply[0]
         print('Got ACK: ' + ack)
         base = int(ack) + 1
-        # if base == nextSeq:
+        if int(ack) == 8:
+            break
+    except socket.error as emsg:
+        emsg = '0'
+        # print('Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
 
-    except socket.error as msg:
-        print('Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
-        sys.exit()
-
-s.close()
 sys.exit()
 
