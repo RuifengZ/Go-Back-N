@@ -20,15 +20,19 @@ nextSeq = 0
 startTime = time.time()
 
 testLoss = True
-# Send 7 test messages
 
+# Continuously send packets
 while 1:
     if nextSeq < base + N:
         try:
             # Send good package
             msg = 'Message ' + str(nextSeq)
-            print('send: SENDING PKT: ' + str(nextSeq))
-            s.sendto(ip_checksum(msg) + str(nextSeq) + msg, (host, port))
+            if nextSeq == 14 and testLoss:
+                print('TESTING PACKET LOSS')
+                testLoss = False
+            else:
+                print('send: SENDING PKT: ' + str(nextSeq))
+                s.sendto(ip_checksum(msg) + str(nextSeq) + msg, (host, port))
             if base == nextSeq:
                 startTime = time.time()
             nextSeq += 1
