@@ -36,10 +36,12 @@ while 1:
     if not data:
         break
     # print(str(ip_checksum(pkt) == checksum))
+    print('expecting: ' + str(expect_seq))
+    print('got pkt: ' + str(seq))
 
     if ip_checksum(pkt) == checksum and seq == str(expect_seq):
         print('recv: Good Data Sending ACK' + str(seq))
-        print('recv pkt: ' + str(pkt))
+        # print('recv pkt: ' + str(pkt))
         s.sendto(str(expect_seq).encode(), addr)
         expect_seq += 1
     else:

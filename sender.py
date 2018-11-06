@@ -23,11 +23,12 @@ testLoss = True
 
 # Continuously send packets
 while 1:
+    print('base: ' + str(base) + ' nextSeq: ' + str(nextSeq))
     if nextSeq < base + N:
         try:
             # Send good package
             msg = 'Message ' + str(nextSeq)
-            if nextSeq == 14 and testLoss:
+            if nextSeq == 2 and testLoss:
                 print('TESTING PACKET LOSS')
                 testLoss = False
             else:
@@ -58,8 +59,6 @@ while 1:
     except socket.error as msg:
         print('Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
         sys.exit()
-    if base > 50:
-        break
 
 s.close()
 sys.exit()
